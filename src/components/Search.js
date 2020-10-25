@@ -21,9 +21,9 @@ export default class Search extends React.Component {
                         <br />
                         <input type="text" className="textbox" />
                         <br />
-                        <label for="url">Email: </label>
+                        {/* <label for="url">Email: </label>
                         <br />
-                        <input type="text" className="textbox" />
+                        <input type="text" className="textbox" /> */}
                         <br />
                         <button className="btn" type="button" onClick={this.hs}>Submit</button>
                     </form>

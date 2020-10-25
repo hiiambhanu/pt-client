@@ -1,5 +1,6 @@
 import React from 'react';
 import Chart from "react-google-charts";
+import Subscribe from './Subscribe';
 
 
 export default class PriceChart extends React.Component {
@@ -15,7 +16,12 @@ export default class PriceChart extends React.Component {
                 easing: 'in',
                 "startup": true
             }
-        }
+        },
+        buttonClicked: true //flase
+    }
+
+    subscribe = () => {
+        this.setState({ buttonClicked: true })
     }
     render() {
         return (
@@ -26,19 +32,27 @@ export default class PriceChart extends React.Component {
                     chartType="LineChart"
                     width="100%"
                     height="400px"
+                    
                     data={this.props.data}
                     options={this.state.options}
                 />
-                <div>
-                    Average Price: {calcAvgPrice(this.props.data)}
+                <div className="flex">
+                    <div>
+                        Average Price: {calcAvgPrice(this.props.data)}
+                    </div>
+                    <div>
+                        Minimum Price: {minPrice(this.props.data)}
+                    </div>
+                    <div>
+                        Current Price: {this.props.currentPrice}
+                    </div>
                 </div>
-                <div>
-                    Minimum Price: {minPrice(this.props.data)}
-                </div>
-                <div>
-                    Current Price: {this.props.currentPrice}
-                </div>
-            </div>
+                {!this.state.buttonClicked ? < button className='btn' onClick={this.subscribe}>
+                    Subscribe for updates
+                </button> : ""}
+
+                { this.state.buttonClicked ? ( <Subscribe maxPrice={this.props.currentPrice}/> ) : ""}
+            </div >
         );
     }
 
@@ -51,7 +65,7 @@ let calcAvgPrice = (data) => {
         if (d[1] && !Number.isNaN(Number.parseFloat(d[1])))
             total += Number.parseFloat(d[1]);
     }
-    return (total / (data.length - 1));
+    return (total / (data.length - 1)).toFixed(2);
 }
 
 
@@ -64,7 +78,7 @@ let minPrice = (data) => {
             ans = Math.min(ans, Number.parseFloat(d[1]));
     }
 
-    return (ans!==Infinity)? ans: "Not Available";
+    return (ans !== Infinity) ? ans : "Not Available";
 }
 
 
