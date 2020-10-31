@@ -1,6 +1,5 @@
 import React from 'react';
 import Chart from "react-google-charts";
-import Subscribe from './Subscribe';
 
 
 export default class PriceChart extends React.Component {
@@ -16,8 +15,7 @@ export default class PriceChart extends React.Component {
                 easing: 'in',
                 "startup": true
             }
-        },
-        buttonClicked: true //flase
+        }
     }
 
     subscribe = () => {
@@ -25,14 +23,14 @@ export default class PriceChart extends React.Component {
     }
     render() {
         return (
-            <div className="searchContainer">
+            <div >
                 <h2>{this.state.heading}</h2>
 
                 <Chart
                     chartType="LineChart"
                     width="100%"
                     height="400px"
-                    
+
                     data={this.props.data}
                     options={this.state.options}
                 />
@@ -47,11 +45,6 @@ export default class PriceChart extends React.Component {
                         Current Price: {this.props.currentPrice}
                     </div>
                 </div>
-                {!this.state.buttonClicked ? < button className='btn' onClick={this.subscribe}>
-                    Subscribe for updates
-                </button> : ""}
-
-                { this.state.buttonClicked ? ( <Subscribe maxPrice={this.props.currentPrice}/> ) : ""}
             </div >
         );
     }
@@ -88,7 +81,6 @@ PriceChart.defaultProps = {
     data: [
         ["Date", "Price"],
         ["27-09-2020", 1030],
-        ["28-09-2020", 1000],
         ["29-09-2020", 1170],
         ["30-09-2020", 660],
         ["30-09-2020", 660],

@@ -15,6 +15,8 @@ export default class Subscribe extends React.Component {
     }
     handleSubmit = (event) => {
         event.preventDefault();
+        if(this.state.name === "" || this.state.email === "" || this.state.budget ==="") return;
+        
         console.log("Submitted");
     }
 
@@ -30,20 +32,20 @@ export default class Subscribe extends React.Component {
                         <label for="name" >
                             Name
                     </label>
-                        <input type="text" name="name" className="textbox" onChange={this.handleChange} />
+                        <input required type="text" name="name" className="textbox" onChange={this.handleChange} />
                     </div>
                     <div>
                         <label for="email" >
                             Email
                     </label>
-                        <input type="email" name="email" className="textbox" onChange={this.handleChange} />
+                        <input required type="email" name="email" className="textbox" onChange={this.handleChange} />
                     </div>
                     <div>
                         <label for="budget">Maximum Budget <span className="smalltext"> (You will be notified if the price drop is less than this)</span></label>
-                        <input min={0} max={this.state.maxPrice} type="number" className="textbox range" onChange={this.handleChange}></input>
+                        <input required min={0} max={this.state.maxPrice} type="number" className="textbox range" onChange={this.handleChange}></input>
                     </div>
                     <div style={{ textAlign: "center" }}>
-                        <button type="button" className="btn " onClick={this.handleSubmit} > Subscribe! </button>
+                        <button type="submit" className="btn " onClick={this.handleSubmit} > Subscribe! </button>
                     </div>
                 </form>
             </div>

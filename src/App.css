@@ -58,6 +58,7 @@
 
 
 .btn:hover{
+    transform: scale(1.01);
     cursor: pointer;
     box-shadow: #68d391 2px 2px;
 }
