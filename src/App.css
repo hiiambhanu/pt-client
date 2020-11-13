@@ -17,7 +17,6 @@
     display: flex;
     padding: 2em 1em 4em 1em;
     flex-direction: column;
-
 }
 
 .flex{
@@ -32,9 +31,15 @@
 }
 
 .subscribe{
-    border: solid 1px #000000;
+    align-self: center;
+    width: 75%;
+    border: solid 2px #000000;
     background-color: #68d391;
     box-shadow: #070a39 5px 5px;
+}
+
+.center{
+    text-align: center;
 }
 
 .range{

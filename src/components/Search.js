@@ -3,6 +3,9 @@ import PriceChart from './PriceChart'
 import "../App.css";
 import Subscribe from './Subscribe';
 
+import config from '../config.json';
+const baseUrl = config.baseUrl;
+
 export default class Search extends React.Component {
 
     state = {
@@ -30,15 +33,15 @@ export default class Search extends React.Component {
                 </div>
                 { this.state.loaded ? (
                     (this.state.data.length !== 1) ? (
-                        <div className="searchContainer"><PriceChart data={this.state.data} currentPrice={this.state.currentPrice} /><Subscribe /></div>
+                        <div className="searchContainer"><PriceChart data={this.state.data} url={this.state.url} currentPrice={this.state.currentPrice} /><Subscribe url={this.state.url} /></div>
                     )
-                        : <div className="searchContainer"><Subscribe /> </div>) : ""}
+                        : <div className="searchContainer"> <div className="center">We do not have sufficient data to show the chart, please Subscribe </div><Subscribe url={this.state.url} /> </div>) : ""}
             </div >
         );
 
     }
     hs = (e) => {
-        fetch('http://localhost:3000' + '/chart', {
+        fetch(baseUrl + '/chart', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -51,12 +54,17 @@ export default class Search extends React.Component {
                 var data = [];
                 data.push(["Date", "Price"]);
 
-                for (let d of res) {
+                let currentPrice = false;
+                if(!res.prices){
+                    return this.setState({data: data, loaded: true});
+                }
+                for (let d of res.prices) {
                     let date = d.date;
                     let price = d.price;
+                    currentPrice = new Date().toLocaleDateString() === d.date ? d.price : currentPrice;
                     data.push([date, price]);
                 }
-                this.setState({ data: data, loaded: true });
+                this.setState({ data: data, currentPrice: currentPrice, loaded: true });
 
             })
             .catch((err) => {

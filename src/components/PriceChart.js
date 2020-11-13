@@ -1,11 +1,15 @@
 import React from 'react';
 import Chart from "react-google-charts";
+import config from '../config.json';
+const baseUrl = config.baseUrl;
 
 
 export default class PriceChart extends React.Component {
 
     state = {
         heading: "Price Chart",
+        currentPrice: this.props.currentPrice,
+
         options: {
             title: "Price of the Product",
             curveType: "function",
@@ -21,6 +25,28 @@ export default class PriceChart extends React.Component {
     subscribe = () => {
         this.setState({ buttonClicked: true })
     }
+
+    componentDidMount() {
+        if (this.state.currentPrice === false) {
+            fetch(baseUrl + '/currentPrice', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    'url': this.props.url,
+                })
+            }).then(res => res.json())
+                .then(res => {
+                    this.setState({ currentPrice: res.currentPrice });
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+        }
+    }
+
+
     render() {
         return (
             <div >
@@ -58,7 +84,9 @@ let calcAvgPrice = (data) => {
         if (d[1] && !Number.isNaN(Number.parseFloat(d[1])))
             total += Number.parseFloat(d[1]);
     }
-    return (total / (data.length - 1)).toFixed(2);
+    let ans = (total / (data.length - 1));
+
+    return ans.toLocaleString('en-IN');
 }
 
 
@@ -71,7 +99,7 @@ let minPrice = (data) => {
             ans = Math.min(ans, Number.parseFloat(d[1]));
     }
 
-    return (ans !== Infinity) ? ans : "Not Available";
+    return (ans !== Infinity) ? ans.toLocaleString('en-IN') : "Not Available";
 }
 
 
