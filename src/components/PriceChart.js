@@ -12,7 +12,6 @@ export default class PriceChart extends React.Component {
 
         options: {
             title: "Price of the Product",
-            curveType: "function",
             legend: { position: "bottom" },
             animation: {
                 duration: 1000,

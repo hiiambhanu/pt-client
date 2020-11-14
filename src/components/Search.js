@@ -40,14 +40,50 @@ export default class Search extends React.Component {
         );
 
     }
+    trim(url){
+        url = url.toLowerCase();
+        if(url.includes('amazon.in')){
+            if( url.includes('gp/product/')){
+                let code = url.split('gp/product/')[1];
+                if(code){
+                    code = code.split('/')[0];
+                    console.log(code);
+                    return 'https://www.amazon.in/gp/product/' + code; 
+                }
+                return false;
+            } 
+            else if(url.includes('dp')){
+                let code = url.split('dp/')[1];
+                if(code){
+                    code = code.split('?')[0];
+                    code = code.split('/')[0];
+                    console.log(code);
+                    return 'https://www.amazon.in/gp/product/' + code; 
+                }
+            }
+        }
+
+        return false;
+    }
     hs = (e) => {
+
+        let trimmedUrl = this.trim(this.state.url);
+
+        console.log("trimmed url", trimmedUrl);
+
+        this.setState({url: trimmedUrl});
+
+        if(!trimmedUrl){
+            e.preventDefault();
+            return alert('The url does not seem to be correct');
+        }
         fetch(baseUrl + '/chart', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                'url': this.state.url,
+                'url': trimmedUrl,
             })
         }).then(res => res.json())
             .then(res => {
