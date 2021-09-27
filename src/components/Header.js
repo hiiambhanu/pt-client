@@ -10,6 +10,8 @@ export default function Header() {
                $ Price Tracker
             </h1>
             Get your favourite product at the best price possible!
+            <br/>
+            We now support Flipkart as well!
         </div>
     );
 }

@@ -26,7 +26,7 @@ export default class Search extends React.Component {
                         <p style={{ color: "grey" }}> Please enter the following details: </p>
                     </div>
                     <form className="flexchild">
-                        <label for="Email">Amazon URL: </label>
+                        <label for="Email">Amazon/Flipkart Product URL: </label>
                         <input type="url" required className="textbox" name="url" id="url" onChange={this.handleChange} />
                         <button className="btn" type="submit" onClick={this.hs}>Submit</button>
                     </form>
