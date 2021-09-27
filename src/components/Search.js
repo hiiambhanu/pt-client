@@ -42,6 +42,7 @@ export default class Search extends React.Component {
     }
     trim(url){
         url = url.toLowerCase();
+
         if(url.includes('amazon.in')){
             if( url.includes('gp/product/')){
                 let code = url.split('gp/product/')[1];
@@ -60,6 +61,15 @@ export default class Search extends React.Component {
                     console.log(code);
                     return 'https://www.amazon.in/gp/product/' + code; 
                 }
+            }
+        }
+
+        if(url.includes("flipkart")){
+            if(url.includes("p/itm")){
+                let firstPart = url.split("?")[0];
+
+                console.log(firstPart);
+                return firstPart;
             }
         }
 

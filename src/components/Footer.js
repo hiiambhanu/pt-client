@@ -6,9 +6,6 @@ export default function Footer() {
             <div>
                 Bhanu Pratap Singh 2K18/CO/109
             </div>
-            <div>
-                Arnav Garg 2K18/CO/087
-            </div>
         </div>
     );
 }
